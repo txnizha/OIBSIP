@@ -1,7 +1,4 @@
 # Task 1: Basic Network Scanning with Nmap
-**OIBSIP | Oasis Infobyte Cybersecurity Internship**
-**Author:** Tanisha Sinha
-**Task Level:** Beginner
 
 ---
 
@@ -142,17 +139,6 @@ This revealed the actual installed package version to be **9.9p2-1** — one pat
 3. **Keep `VerifyHostKeyDNS` disabled**: This is the default setting and should remain so, as it is a precondition for CVE-2025-26465 exploitation.
 4. **Close unused ports**: Every open port is a potential attack vector. Disable services that are not required.
 5. **Regularly re-scan and re-verify**: Nmap scans should be part of routine security audits to catch newly opened ports or version drift from software updates.
-
----
-
-## Repository Structure
-Task1_Nmap/
-├── README.md
-├── nmap_scan_results.txt
-└── screenshots/
-├── scan1_basic.png
-├── scan2_service_detection.png
-└── scan3_aggressive.png
 
 ---
 
