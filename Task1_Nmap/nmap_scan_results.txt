@@ -1,0 +1,36 @@
+# Nmap 7.95 scan initiated Tue Jun 30 15:37:15 2026 as: /usr/lib/nmap/nmap --privileged -oN nmap_scan_results.txt 127.0.0.1
+Nmap scan report for localhost (127.0.0.1)
+Host is up (0.0000010s latency).
+Not shown: 999 closed tcp ports (reset)
+PORT   STATE SERVICE
+22/tcp open  ssh
+
+# Nmap done at Tue Jun 30 15:37:15 2026 -- 1 IP address (1 host up) scanned in 0.08 seconds
+Starting Nmap 7.95 ( https://nmap.org ) at 2026-06-30 15:46 AEST
+Nmap scan report for localhost (127.0.0.1)
+Host is up (0.0000010s latency).
+Not shown: 999 closed tcp ports (reset)
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 9.9p1 Debian 3 (protocol 2.0)
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 0.29 seconds
+Starting Nmap 7.95 ( https://nmap.org ) at 2026-06-30 16:11 AEST
+Nmap scan report for localhost (127.0.0.1)
+Host is up (0.000045s latency).
+Not shown: 999 closed tcp ports (reset)
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 9.9p1 Debian 3 (protocol 2.0)
+| ssh-hostkey: 
+|   256 fe:a8:d3:04:59:93:6e:5f:c1:cc:01:34:a7:f1:3c:e0 (ECDSA)
+|_  256 f8:54:14:76:f5:47:8c:60:05:08:a5:a9:bf:d1:a2:92 (ED25519)
+Device type: general purpose
+Running: Linux 2.6.X|5.X
+OS CPE: cpe:/o:linux:linux_kernel:2.6.32 cpe:/o:linux:linux_kernel:5 cpe:/o:linux:linux_kernel:6
+OS details: Linux 2.6.32, Linux 5.0 - 6.2
+Network Distance: 0 hops
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 1.82 seconds
