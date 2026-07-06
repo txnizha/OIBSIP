@@ -197,3 +197,15 @@ nmap -A 127.0.0.1 >> nmap_scan_results.txt
 - Identifying open ports is the first step in understanding a system's attack surface.
 - The difference between a **port being open** and a **service being secure** is critical.
 - **Scanner output should be verified, not trusted blindly.** Nmap reported OpenSSH 9.9p1 as the version, but package manager verification revealed 9.9p2-1 was actually installed and already patched, demonstrating the importance of corroborating automated findings against independent sources.
+
+---
+
+## References
+
+- Nmap Official Documentation: https://nmap.org/docs.html
+- Nmap Reference Guide: https://nmap.org/book/man.html
+- CVE-2025-26465 Detail: https://nvd.nist.gov/vuln/detail/CVE-2025-26465
+- CVE-2025-26466 Detail: https://nvd.nist.gov/vuln/detail/CVE-2025-26466
+- OpenSSH Release Notes: https://www.openssh.com/releasenotes.html
+- IANA Port Number Registry: https://www.iana.org/assignments/service-names-port-numbers
+- NIST National Vulnerability Database: https://nvd.nist.gov
