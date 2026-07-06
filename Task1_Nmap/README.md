@@ -11,7 +11,7 @@ Perform a network scan to identify open ports and active services on a local mac
 | Tool | Version | Purpose |
 |------|---------|---------|
 | Nmap | 7.95 | Network discovery and port scanning |
-| Kali Linux | Rolling release | Host OS / scan environment |
+| Kali Linux (VMware Fusion) | Rolling release | Host OS / scan environment (virtualized on macOS) |
 
 ---
 
