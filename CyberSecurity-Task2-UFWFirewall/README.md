@@ -1,3 +1,5 @@
+Here's the clean version with all em dashes removed:
+
 # Task 2: Basic Firewall Configuration with UFW
 
 ## Objective
@@ -8,7 +10,7 @@ Set up and configure a basic firewall on a Linux system using UFW (Uncomplicated
 
 ## Background & Ethical Use
 
-A firewall is a network security tool that monitors and controls incoming and outgoing network traffic based on predefined rules. It acts as a barrier between a trusted internal network and untrusted external networks, enforcing the security principle of least privilege at the network level — only explicitly permitted traffic is allowed through.
+A firewall is a network security tool that monitors and controls incoming and outgoing network traffic based on predefined rules. It acts as a barrier between a trusted internal network and untrusted external networks, enforcing the security principle of least privilege at the network level. Only explicitly permitted traffic is allowed through.
 
 UFW (Uncomplicated Firewall) is a simplified interface for managing iptables, which is Linux's built-in firewall engine. While iptables is extremely powerful, its syntax is complex. UFW abstracts this complexity into human-readable commands, making firewall configuration accessible without sacrificing control.
 
@@ -46,10 +48,10 @@ ufw --version
 
 | Rule | Port | Protocol | Action | Reason |
 |------|------|----------|--------|--------|
-| Default policy | All | All | Deny incoming | Secure baseline — block everything unless explicitly allowed |
+| Default policy | All | All | Deny incoming | Secure baseline, block everything unless explicitly allowed |
 | Default policy | All | All | Allow outgoing | Allow machine to initiate outbound connections |
 | SSH | 22 | TCP | Allow | Required for remote administration |
-| HTTP | 80 | TCP | Deny | Unencrypted — vulnerable to interception |
+| HTTP | 80 | TCP | Deny | Unencrypted, vulnerable to interception |
 | HTTPS | 443 | TCP | Allow | Encrypted web traffic using TLS |
 | Telnet | 23 | TCP | Deny | Obsolete protocol, transmits credentials in plain text |
 
@@ -88,7 +90,7 @@ HTTP transmits all data in plain text, including authentication credentials and 
 sudo ufw allow https
 ```
 
-HTTPS is the encrypted alternative to HTTP. Allowing port 443 while denying port 80 implements a standard web server hardening practice — only encrypted web communication is permitted.
+HTTPS is the encrypted alternative to HTTP. Allowing port 443 while denying port 80 implements a standard web server hardening practice. Only encrypted web communication is permitted.
 
 ### Step 5: Deny Telnet (Port 23)
 
@@ -191,11 +193,11 @@ sudo ufw status verbose
 
 ## Key Learnings
 
-- Firewalls implement the principle of least privilege at the network level — deny everything by default, allow only what is explicitly needed.
+- Firewalls implement the principle of least privilege at the network level. Deny everything by default and allow only what is explicitly needed.
 - Setting default policies before enabling UFW is critical to avoid locking yourself out of a remote system.
-- The difference between HTTP and HTTPS is not just encryption — it is the difference between data being readable by any network observer versus being protected by TLS.
+- The difference between HTTP and HTTPS is not just encryption. It is the difference between data being readable by any network observer versus being protected by TLS.
 - Defense in depth means denying dangerous protocols like Telnet even when they are not actively running, closing potential attack vectors before they can be exploited.
-- Testing firewall rules after configuration is as important as the configuration itself — a rule that exists but does not work provides false security.
+- Testing firewall rules after configuration is as important as the configuration itself. A rule that exists but does not work provides false security.
 
 ---
 
