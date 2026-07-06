@@ -10,8 +10,36 @@ Perform a network scan to identify open ports and active services on a local mac
 
 | Tool | Version | Purpose |
 |------|---------|---------|
-| Nmap | Pre-installed on Kali Linux | Network discovery and port scanning |
+| Nmap | 7.95 | Network discovery and port scanning |
 | Kali Linux | Rolling release | Host OS / scan environment |
+
+---
+
+## Installation
+
+Nmap comes pre-installed on Kali Linux. To verify it is present and check the version:
+
+```bash
+nmap --version
+```
+
+Expected output:
+Nmap version 7.95 ( https://nmap.org )
+
+If Nmap is not installed (on Ubuntu/Debian-based systems):
+
+```bash
+sudo apt update
+sudo apt install nmap -y
+```
+
+On Red Hat/Fedora-based systems:
+
+```bash
+sudo dnf install nmap -y
+```
+
+Verify installation was successful by running `nmap --version` again after install.
 
 ---
 
