@@ -1,8 +1,20 @@
+Here's your complete final README — replace everything in GitHub with this:
+
 # Task 1: Basic Network Scanning with Nmap
 
 ## Objective
 
 Perform a network scan to identify open ports and active services on a local machine using Nmap, and document findings with security implications.
+
+---
+
+## Background & Ethical Use
+
+Network scanning is a fundamental technique in both offensive and defensive cybersecurity. Security analysts use it to audit their own infrastructure, identify exposed services, and reduce attack surface. Penetration testers use it during authorized engagements to simulate what a real attacker would see.
+
+Nmap (Network Mapper) is the industry-standard open-source tool for network discovery and security auditing. It works by sending packets to target ports and analyzing responses to determine which services are running and what versions they are.
+
+**Ethical Use Notice:** Network scanning should only ever be performed on systems you own or have explicit written authorization to test. Scanning systems without permission is illegal in most jurisdictions and violates computer misuse laws. All scans in this task were performed exclusively on localhost (127.0.0.1) — the analyst's own machine — with no external systems targeted.
 
 ---
 
