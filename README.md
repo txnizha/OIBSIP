@@ -1,4 +1,4 @@
-# OIBSIP — Oasis Infobyte Cybersecurity Internship
+# OIBSIP - Oasis Infobyte Cybersecurity Internship
 
 ## About This Repository
 
