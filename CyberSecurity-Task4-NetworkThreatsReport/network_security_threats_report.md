@@ -140,7 +140,7 @@ DNS poisoning enables phishing at scale, credential harvesting, malware distribu
 
 Three key takeaways for a network administrator:
 
-1. **No single control is sufficient.** Each of the threats covered in this report can bypass defenses that work against other threats. Defense in depth — layering multiple independent controls — is the only reliable approach. HTTPS addresses MITM but not DDoS. Rate limiting addresses DDoS but not DNS poisoning. A comprehensive security posture requires all layers working together.
+1. **No single control is sufficient.** Each of the threats covered in this report can bypass defenses that work against other threats. Defense in depth, layering multiple independent controls, is the only reliable approach. HTTPS addresses MITM but not DDoS. Rate limiting addresses DDoS but not DNS poisoning. A comprehensive security posture requires all layers working together.
 
 2. **Encryption is foundational, not optional.** MITM attacks, DNS poisoning, and IP spoofing all derive significant power from the fact that much network traffic is transmitted without cryptographic authentication. Implementing HTTPS with HSTS, DNSSEC, and mutual TLS removes the ability of attackers to intercept, modify, or forge traffic even when they have a privileged network position.
 
