@@ -93,7 +93,7 @@ Successful baiting attacks deliver malware directly onto corporate networks, byp
 
 ---
 
-## 4. Quid Pro Quo (Bonus)
+## 4. Quid Pro Quo
 
 ### How It Works
 
