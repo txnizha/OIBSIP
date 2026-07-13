@@ -1,4 +1,3 @@
-Got it. Here's the corrected README with proper formatting throughout. The issue was indentation in certain sections. Replace everything on GitHub with this:
 # Task 7: Vulnerability Scanning with Nikto
 
 ## Objective
