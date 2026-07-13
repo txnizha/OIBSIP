@@ -239,7 +239,6 @@ Require ip 127.0.0.1
 <LimitExcept GET POST HEAD>
     Deny from all
 </LimitExcept>
-````
 
 Security Recommendations Summary
 PriorityActionHighPatch path traversal vulnerability and restrict directory accessMediumAdd X-Frame-Options header to prevent clickjackingMediumRestrict /server-status to localhost onlyLowAdd X-Content-Type-Options headerLowRemove inode data from ETag headersLowRestrict allowed HTTP methods to minimum required
