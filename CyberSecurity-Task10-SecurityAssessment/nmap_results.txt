@@ -1,0 +1,16 @@
+# Nmap 7.95 scan initiated Mon Jul 13 20:32:21 2026 as: /usr/lib/nmap/nmap --privileged -sV -O -oN /home/kali/OIBSIP/CyberSecurity-Task10-SecurityAssessment/nmap_results.txt 127.0.0.1
+Nmap scan report for localhost (127.0.0.1)
+Host is up (0.00012s latency).
+Not shown: 998 closed tcp ports (reset)
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 9.9p1 Debian 3 (protocol 2.0)
+80/tcp open  http    Apache httpd 2.4.63 ((Debian))
+Device type: general purpose
+Running: Linux 2.6.X|5.X
+OS CPE: cpe:/o:linux:linux_kernel:2.6.32 cpe:/o:linux:linux_kernel:5 cpe:/o:linux:linux_kernel:6
+OS details: Linux 2.6.32, Linux 5.0 - 6.2
+Network Distance: 0 hops
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Mon Jul 13 20:32:29 2026 -- 1 IP address (1 host up) scanned in 7.58 seconds
