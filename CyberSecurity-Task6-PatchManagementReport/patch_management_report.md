@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Patch management is the systematic process of identifying, acquiring, testing, and applying software updates to systems and applications. These updates, commonly called patches, address security vulnerabilities, fix bugs, and improve functionality. In the context of cybersecurity, patch management plays a critical role in the vulnerability lifecycle — the window of time between a vulnerability being discovered and a patch being applied represents one of the most dangerous periods for any organization.
+Patch management is the systematic process of identifying, acquiring, testing, and applying software updates to systems and applications. These updates, commonly called patches, address security vulnerabilities, fix bugs, and improve functionality. In the context of cybersecurity, patch management plays a critical role in the vulnerability lifecycle. The window of time between a vulnerability being discovered and a patch being applied represents one of the most dangerous periods for any organization.
 
 Unpatched systems are among the most exploited attack vectors in modern cybersecurity. The 2017 WannaCry ransomware attack, which affected over 200,000 systems across 150 countries and caused an estimated $4 billion in damages, exploited a Windows vulnerability for which a patch had been available for two months. The Equifax breach of 2017, which exposed the personal data of 147 million people, resulted from an unpatched Apache Struts vulnerability. Both incidents demonstrate that the failure to apply available patches in a timely manner can have catastrophic consequences.
 
