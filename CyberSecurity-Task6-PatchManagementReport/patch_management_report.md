@@ -119,7 +119,7 @@ Despite its importance, many organizations struggle to maintain effective patch 
 
 ## Key Learnings
 
-- Patch management is not a technical nicety — it is a fundamental security control. The majority of successful cyberattacks exploit known, patched vulnerabilities in unpatched systems.
+- Patch management is not a technical nicety. It is a fundamental security control. The majority of successful cyberattacks exploit known, patched vulnerabilities in unpatched systems.
 - The exploitation window between vulnerability disclosure and patch application is when organizations are most at risk. Reducing this window through faster, more automated patching directly reduces organizational risk.
 - Effective patch management requires people, process, and technology working together. Automated tools accelerate deployment, but human judgment is required for risk prioritization, exception management, and verification.
 - Legacy systems and third-party components represent significant blind spots in many patch management programs. A complete asset inventory is the foundation of any effective program.
