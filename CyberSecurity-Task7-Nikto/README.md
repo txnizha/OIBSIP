@@ -246,13 +246,25 @@ Require ip 127.0.0.1
 <LimitExcept GET POST HEAD>
     Deny from all
 </LimitExcept>
-````
 
-Security Recommendations Summary
-PriorityActionHighPatch path traversal vulnerability and restrict directory accessMediumAdd X-Frame-Options header to prevent clickjackingMediumRestrict /server-status to localhost onlyLowAdd X-Content-Type-Options headerLowRemove inode data from ETag headersLowRestrict allowed HTTP methods to minimum required
 
-How to Reproduce
-bash# Start Apache web server
+## Security Recommendations Summary
+
+| Priority | Action |
+|----------|--------|
+| High | Patch path traversal vulnerability and restrict directory access |
+| Medium | Add X-Frame-Options header to prevent clickjacking |
+| Medium | Restrict /server-status to localhost only |
+| Low | Add X-Content-Type-Options header |
+| Low | Remove inode data from ETag headers |
+| Low | Restrict allowed HTTP methods to minimum required |
+
+---
+
+## How to Reproduce
+
+```bash
+# Start Apache web server
 sudo systemctl start apache2
 
 # Basic scan
@@ -263,23 +275,27 @@ nikto -h http://127.0.0.1 -o nikto_scan_results.txt
 
 # SSL scan
 nikto -h http://127.0.0.1 -ssl
+```
 
-Key Learnings
+---
 
-Nikto operates at the application layer and is specifically designed for web server vulnerability assessment, complementing network-layer tools like Nmap.
-A noisy scanner like Nikto prioritizes thoroughness over stealth. It sends hundreds of requests rapidly and leaves obvious traces in server logs, making it unsuitable for use without explicit authorization.
-Not all Nikto findings are true positives. Several findings in this scan were false positives where Nikto checked for known malicious paths that do not exist on a clean Apache installation. Security analysts must interpret scanner output critically rather than treating every finding as a confirmed vulnerability.
-Missing HTTP security headers are among the most common and easily remediated web server misconfigurations. Adding headers like X-Frame-Options and X-Content-Type-Options requires a single configuration line but significantly reduces attack surface.
-The SSL scan flag is essential when assessing HTTPS-enabled servers, where weak cipher suites or expired certificates represent serious vulnerabilities.
+## Key Learnings
 
+- Nikto operates at the application layer and is specifically designed for web server vulnerability assessment, complementing network-layer tools like Nmap.
+- A noisy scanner like Nikto prioritizes thoroughness over stealth. It sends hundreds of requests rapidly and leaves obvious traces in server logs, making it unsuitable for use without explicit authorization.
+- Not all Nikto findings are true positives. Several findings in this scan were false positives where Nikto checked for known malicious paths that do not exist on a clean Apache installation. Security analysts must interpret scanner output critically rather than treating every finding as a confirmed vulnerability.
+- Missing HTTP security headers are among the most common and easily remediated web server misconfigurations. Adding headers like X-Frame-Options and X-Content-Type-Options requires a single configuration line but significantly reduces attack surface.
+- The SSL scan flag is essential when assessing HTTPS-enabled servers, where weak cipher suites or expired certificates represent serious vulnerabilities.
 
-References
+---
 
-Nikto Official GitHub Repository: https://github.com/sullo/nikto
-Nikto Documentation: https://cirt.net/Nikto2
-Nikto Web Vulnerability Scanner Tutorial: https://www.youtube.com/results?search_query=nikto+web+vulnerability+scanner+tutorial
-OWASP Top 10 Vulnerabilities: https://owasp.org/www-project-top-ten/
-CVE-2003-1418 (ETag Inode Leakage): http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2003-1418
-Mozilla MDN X-Frame-Options: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options
-Apache Security Tips: https://httpd.apache.org/docs/2.4/misc/security_tips.html
-OSVDB-561 Apache Server Status: https://www.rapid7.com/db/vulnerabilities/apache-httpd-osvdb-561/
+## References
+
+- Nikto Official GitHub Repository: https://github.com/sullo/nikto
+- Nikto Documentation: https://cirt.net/Nikto2
+- Nikto Web Vulnerability Scanner Tutorial: https://www.youtube.com/results?search_query=nikto+web+vulnerability+scanner+tutorial
+- OWASP Top 10 Vulnerabilities: https://owasp.org/www-project-top-ten/
+- CVE-2003-1418 (ETag Inode Leakage): http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2003-1418
+- Mozilla MDN X-Frame-Options: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options
+- Apache Security Tips: https://httpd.apache.org/docs/2.4/misc/security_tips.html
+- OSVDB-561 Apache Server Status: https://www.rapid7.com/db/vulnerabilities/apache-httpd-osvdb-561/
