@@ -1,4 +1,4 @@
-# OIBSIP - Oasis Infobyte Cybersecurity Internship
+# OIBSIP — Oasis Infobyte Cybersecurity Internship
 
 ## About This Repository
 
@@ -25,7 +25,7 @@ This repository contains all task submissions for the Oasis Infobyte Cyber Secur
 
 ## Tools Used
 
-Nmap, UFW, Wireshark, Nikto, DVWA, Kali Linux (VMware Fusion)
+Nmap, UFW, Wireshark, Nikto, DVWA, sqlmap, Kali Linux (VMware Fusion)
 
 ---
 
