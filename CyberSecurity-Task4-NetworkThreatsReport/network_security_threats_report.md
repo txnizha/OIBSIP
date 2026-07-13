@@ -2,9 +2,7 @@
 
 ## Introduction
 
-Network security threats represent one of the most significant challenges facing organizations in the modern digital landscape. As businesses become increasingly dependent on networked infrastructure, the potential impact of network-based attacks grows proportionally. Understanding how these attacks work, what damage they can cause, and how to defend against them is a foundational requirement for any security professional.
-
-This report examines four of the most prevalent and damaging categories of network security threats: Denial of Service and Distributed Denial of Service attacks, Man-in-the-Middle attacks, IP Spoofing, and DNS Poisoning. For each threat, this report covers the technical mechanism of the attack, a documented real-world incident, the business and operational impact, and specific mitigation strategies that organizations can implement.
+Network security threats represent one of the most significant challenges facing organizations in the modern digital landscape. As businesses become increasingly dependent on networked infrastructure, the potential impact of network-based attacks grows proportionally. Understanding how these attacks work, what damage they can cause, and how to defend against them is a foundational requirement for any security professional. This report examines four of the most prevalent and damaging categories of network security threats: Denial of Service and Distributed Denial of Service attacks, Man-in-the-Middle attacks, IP Spoofing, and DNS Poisoning. For each threat, this report covers the technical mechanism of the attack, a documented real-world incident, the business and operational impact, and specific mitigation strategies that organizations can implement.
 
 ---
 
@@ -14,7 +12,7 @@ This report examines four of the most prevalent and damaging categories of netwo
 
 A Denial of Service attack aims to make a system, service, or network unavailable to its intended users by overwhelming it with illegitimate traffic or requests. The target becomes so consumed handling the attack traffic that it cannot respond to legitimate requests.
 
-A Distributed Denial of Service attack scales this concept by coordinating the attack from thousands or millions of compromised machines (called a botnet) simultaneously. This makes the attack far more powerful and significantly harder to defend against, as the traffic originates from many different IP addresses around the world.
+A Distributed Denial of Service attack scales this concept by coordinating the attack from thousands or millions of compromised machines called a botnet simultaneously. This makes the attack far more powerful and significantly harder to defend against, as the traffic originates from many different IP addresses around the world.
 
 Common DDoS techniques include:
 
@@ -129,12 +127,12 @@ DNS poisoning enables phishing at scale, credential harvesting, malware distribu
 
 ## Comparison Table
 
-| Threat | Attack Vector | Primary Target | Difficulty to Execute | Ease of Mitigation |
+| Threat | Attack Vector | Who is at Risk | Difficulty to Execute | Ease of Mitigation |
 |--------|--------------|----------------|----------------------|-------------------|
-| DoS/DDoS | Network flood, botnet | Availability of services | Low to Medium | Medium |
-| MITM | Network interception, ARP spoofing | Confidentiality of data | Medium | Medium |
-| IP Spoofing | Forged packet headers | Access controls, DDoS amplification | Medium | Easy |
-| DNS Poisoning | Forged DNS responses | DNS resolver cache | Medium | Medium |
+| DoS/DDoS | Network flood, botnet | Any internet-facing service, e-commerce, financial services | Low to Medium | Medium |
+| MITM | Network interception, ARP spoofing | Users on shared or unsecured networks, web applications | Medium | Medium |
+| IP Spoofing | Forged packet headers | Systems using IP-based access controls, DDoS victims | Medium | Easy |
+| DNS Poisoning | Forged DNS responses | All internet users relying on unprotected DNS resolvers | Medium | Medium |
 
 ---
 
