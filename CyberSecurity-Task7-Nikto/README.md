@@ -104,7 +104,7 @@ nikto -h http://127.0.0.1 -o nikto_scan_results.txt
 
 Same scan as above but with the `-o` flag saving all output to `nikto_scan_results.txt` for documentation and GitHub submission.
 
-See screenshot: `nikto2_scan_with_output.png`
+See screenshot: `nikto2_scan_output_saved.png`
 
 ### Scan 3: SSL Check
 
