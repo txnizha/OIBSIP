@@ -43,7 +43,7 @@ The most significant finding is the presence of an unencrypted HTTP web server (
 
 The SSH service running on port 22 was found to be running a patched version (9.9p2-1) and does not present an immediate vulnerability, though it remains a target for brute-force attacks if exposed to untrusted networks.
 
-Network traffic analysis revealed unencrypted HTTP requests containing readable host information and request headers, confirming the risk posed by the HTTP service. ARP traffic analysis showed normal gateway communication with no signs of ARP spoofing.
+Network traffic analysis over a 5+ minute capture window revealed unencrypted HTTP requests containing readable host information and request headers, confirming the risk posed by the HTTP service. DNS traffic was observed in plain text, exposing domain lookup activity. ARP traffic analysis showed normal gateway communication with no signs of ARP spoofing.
 
 **Overall Risk Posture: Medium**
 
@@ -84,7 +84,30 @@ See screenshot: `task10_1_nmap.png`
 
 **Tool:** Wireshark 4.4.4
 **Interface:** eth0
-**Capture Duration:** 2+ minutes
+**Capture Duration:** 5+ minutes
+
+### HTTP Traffic Analysis
+
+**Filter applied:** `http`
+
+HTTP traffic was captured showing unencrypted GET requests from the local machine to external servers including neverssl.com and httpforever.com. Expanding the Hypertext Transfer Protocol layer in Wireshark revealed the following readable data in plain text:
+GET / HTTP/1.1
+Host: neverssl.com
+User-Agent: curl/8.12.1
+Accept: /
+Full request URI: http://neverssl.com/
+
+This demonstrates that HTTP traffic exposes the destination host, request path, client software, and all request headers to any network observer. In a real-world scenario involving login forms or session cookies transmitted over HTTP, credentials and authentication tokens would be equally visible.
+
+See screenshot: `task10_2_http.png`
+
+### DNS Traffic Analysis
+
+**Filter applied:** `dns`
+
+DNS queries and responses were captured showing domain resolution activity for google.com, github.com, neverssl.com, and httpforever.com. DNS traffic is unencrypted by default, meaning all domain lookups are visible to any observer on the network path. This represents a privacy and security concern as an observer can determine which websites a user is visiting even without being able to read the encrypted HTTPS content.
+
+See screenshot: `task10_3_dns.png`
 
 ### ARP Traffic Analysis
 
@@ -101,26 +124,7 @@ ARP (Address Resolution Protocol) traffic was captured showing normal gateway co
 
 No ARP spoofing indicators were detected. ARP spoofing would appear as unsolicited ARP replies attempting to associate a legitimate IP address with an attacker's MAC address.
 
-See screenshot: `task10_2_arp.png`
-
-### DNS Traffic Analysis
-
-**Filter applied:** `dns`
-
-DNS queries and responses were captured showing domain resolution activity. DNS traffic is unencrypted by default, meaning all domain lookups are visible to any observer on the network path. This represents a privacy and security concern as an observer can determine which websites a user is visiting even without being able to read the encrypted HTTPS content.
-
-See screenshot: `task10_3_dns.png`
-
-### HTTP Traffic Analysis
-
-HTTP traffic analysis was performed using the capture from Task 8 (Wireshark Traffic Capture). A GET request to neverssl.com was identified containing the following readable data:
-GET / HTTP/1.1
-Host: neverssl.com
-User-Agent: curl/8.12.1
-Accept: /
-Full request URI: http://neverssl.com/
-
-This demonstrates that HTTP traffic exposes the destination host, request path, client software, and all request headers in plain text to any network observer.
+See screenshot: `task10_4_arp.png`
 
 ---
 
@@ -140,6 +144,8 @@ Nikto identified 15 findings against the Apache web server. Full details are doc
 | Missing X-Content-Type-Options header | Low |
 | ETag inode leakage (CVE-2003-1418) | Low |
 | PHP backdoor paths checked (false positives) | Informational |
+
+See screenshot: `task10_5_nikto.png`
 
 ---
 
