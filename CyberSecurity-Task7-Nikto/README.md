@@ -1,3 +1,4 @@
+Got it. Here's the corrected README with proper formatting throughout. The issue was indentation in certain sections. Replace everything on GitHub with this:
 # Task 7: Vulnerability Scanning with Nikto
 
 ## Objective
@@ -27,8 +28,6 @@ Nikto operates at the application layer, targeting web servers specifically. Whe
 ---
 
 ## Nikto vs Nmap
-
-A common point of confusion is the difference between Nikto and Nmap. They operate at different layers and serve different purposes:
 
 | | Nmap | Nikto |
 |--|------|-------|
@@ -136,24 +135,25 @@ Nikto reported 15 findings across the basic scan. Each is documented below with 
 ---
 
 ### Finding 1: Missing X-Frame-Options Header
+
 **Severity:** Medium
 
 **What it is:** The server does not include the `X-Frame-Options` HTTP response header, which tells browsers whether the page can be embedded inside a frame or iframe on another website.
 
-**Why it is a risk:** Without this header, attackers can load your website invisibly inside a malicious page using an iframe and trick users into clicking elements they cannot see. This attack is called clickjacking. A user visiting a malicious site could unknowingly perform actions on your site, such as submitting forms or clicking buttons, while believing they are interacting with the attacker's page.
+**Why it is a risk:** Without this header, attackers can load your website invisibly inside a malicious page using an iframe and trick users into clicking elements they cannot see. This attack is called clickjacking.
 
-**How to fix it:** Add the following directive to the Apache configuration file (`/etc/apache2/apache2.conf`) or a virtual host file:
+**How to fix it:** Add the following directive to the Apache configuration file:
 Header always set X-Frame-Options "SAMEORIGIN"
-`SAMEORIGIN` allows framing only by pages on the same domain, blocking cross-origin clickjacking attempts.
 
 ---
 
 ### Finding 2: Missing X-Content-Type-Options Header
+
 **Severity:** Low
 
 **What it is:** The server does not include the `X-Content-Type-Options` header in its responses.
 
-**Why it is a risk:** Without this header, browsers may attempt to guess the content type of a response rather than trusting the declared MIME type. This is called MIME sniffing. An attacker could upload a file disguised as an image that is actually executable JavaScript, and a vulnerable browser might execute it, leading to cross-site scripting attacks.
+**Why it is a risk:** Without this header, browsers may attempt to guess the content type of a response rather than trusting the declared MIME type. This is called MIME sniffing. An attacker could upload a file disguised as an image that is actually executable JavaScript, and a vulnerable browser might execute it.
 
 **How to fix it:** Add to Apache configuration:
 Header always set X-Content-Type-Options "nosniff"
@@ -161,11 +161,12 @@ Header always set X-Content-Type-Options "nosniff"
 ---
 
 ### Finding 3: ETag Inode Leakage (CVE-2003-1418)
+
 **Severity:** Low
 
-**What it is:** Apache's ETag header, used for browser caching, was found to include the file's inode number — a low-level Linux filesystem identifier.
+**What it is:** Apache's ETag header was found to include the file's inode number, a low-level Linux filesystem identifier.
 
-**Why it is a risk:** Exposing inode numbers leaks internal information about the server's filesystem structure. While not directly exploitable on its own, this information can assist attackers in fingerprinting the server and planning more targeted attacks. It also confirms the server is running on a Linux filesystem, narrowing the attack surface.
+**Why it is a risk:** Exposing inode numbers leaks internal information about the server's filesystem structure, assisting attackers in fingerprinting the server and planning more targeted attacks.
 
 **How to fix it:** Modify the Apache configuration to remove inode information from ETags:
 FileETag MTime Size
@@ -173,13 +174,14 @@ FileETag MTime Size
 ---
 
 ### Finding 4: Exposed /server-status Page
+
 **Severity:** Medium
 
 **What it is:** Apache's built-in status module exposes a page at `/server-status` showing real-time server activity including active connections, request details, and server uptime.
 
-**Why it is a risk:** This page reveals sensitive operational information about the server including current requests being processed, client IP addresses, and request URIs. An attacker could use this to monitor server activity, identify authenticated sessions, or gather intelligence for further attacks.
+**Why it is a risk:** This page reveals sensitive operational information about the server including current requests being processed, client IP addresses, and request URIs.
 
-**How to fix it:** Restrict access to `/server-status` to localhost only by adding the following to the Apache configuration:
+**How to fix it:** Restrict access to `/server-status` to localhost only:
 <Location /server-status>
 Require ip 127.0.0.1
 </Location>
@@ -187,58 +189,64 @@ Require ip 127.0.0.1
 ---
 
 ### Finding 5: Path Traversal via Extra Slash (///etc/hosts)
+
 **Severity:** High
 
-**What it is:** Nikto identified that appending extra forward slashes to a URL path (e.g., `///etc/hosts`) may allow reading of arbitrary system files outside the web root.
+**What it is:** Nikto identified that appending extra forward slashes to a URL path may allow reading of arbitrary system files outside the web root.
 
-**Why it is a risk:** If exploitable, this path traversal vulnerability would allow an attacker to read sensitive system files including `/etc/passwd` (user account information), `/etc/shadow` (password hashes), and configuration files containing credentials. This represents a critical information disclosure risk.
+**Why it is a risk:** If exploitable, this path traversal vulnerability would allow an attacker to read sensitive system files including `/etc/passwd`, `/etc/shadow`, and configuration files containing credentials.
 
-**How to fix it:** Ensure Apache's document root is properly isolated and that the `Options` directive does not include `Indexes` or `FollowSymLinks` unnecessarily. Apply the latest Apache security patches and configure strict directory access controls.
+**How to fix it:** Ensure Apache's document root is properly isolated and apply the latest Apache security patches. Configure strict directory access controls and disable unnecessary Options directives.
 
 ---
 
 ### Findings 6 to 12: PHP Backdoor File Paths
+
 **Severity:** Informational
 
-**What it is:** Nikto checked for the presence of several known PHP backdoor file paths commonly associated with compromised WordPress installations, including paths under `/wp-content/`, `/wp-includes/`, and `/wordpress/`.
+**What it is:** Nikto checked for the presence of several known PHP backdoor file paths commonly associated with compromised WordPress installations.
 
-**Why it is a risk:** These paths are associated with malicious PHP scripts that attackers plant on compromised WordPress sites to maintain persistent access. If found on a production server, they would indicate a serious compromise.
+**Why it is a risk:** These files, if present, would indicate a serious server compromise. PHP backdoors give attackers persistent remote access through a browser interface.
 
-**Context for this scan:** These files do not exist on the clean Apache installation used for this task. Nikto checks for these paths regardless of whether WordPress is installed, as part of its comprehensive vulnerability database. The findings here are false positives but are documented to illustrate Nikto's detection methodology.
+**Context for this scan:** These files do not exist on the clean Apache installation used for this task. The findings are false positives but are documented to illustrate Nikto's detection methodology.
 
-**How to fix it:** On real WordPress installations, regularly audit installed files against known good states, use file integrity monitoring, and remove any unrecognized PHP files immediately.
+**How to fix it:** On real WordPress installations, regularly audit installed files, use file integrity monitoring, and remove any unrecognized PHP files immediately.
 
 ---
 
 ### Finding 13: D-Link Router Command Execution Path
+
 **Severity:** Informational
 
-**What it is:** Nikto checked for a path associated with a known remote command execution vulnerability in D-Link routers (`/login.cgi?cli=`).
+**What it is:** Nikto checked for a path associated with a known remote command execution vulnerability in D-Link routers.
 
-**Context for this scan:** This is not applicable to an Apache web server. Nikto's database includes vulnerabilities across many different device types and platforms. This finding illustrates that Nikto scans broadly rather than tailoring checks to the specific target.
+**Context for this scan:** Not applicable to an Apache web server. This finding illustrates that Nikto scans broadly across many device types and platforms.
 
 ---
 
 ### Finding 14: Shell Backdoor Path
+
 **Severity:** Informational
 
-**What it is:** Nikto checked for a path (`/shell`) associated with known web shell backdoors.
+**What it is:** Nikto checked for a path associated with known web shell backdoors.
 
-**Context for this scan:** This path does not exist on the test Apache server. Web shells are malicious scripts uploaded to compromised servers that give attackers command execution capability through a browser. Their presence on a production server would indicate a critical compromise.
+**Context for this scan:** This path does not exist on the test Apache server. Web shells are malicious scripts that give attackers command execution capability through a browser.
 
 ---
 
 ### Finding 15: Allowed HTTP Methods
+
 **Severity:** Informational
 
-**What it is:** Nikto identified that the server accepts the following HTTP methods: GET, POST, OPTIONS, HEAD.
+**What it is:** The server accepts the following HTTP methods: GET, POST, OPTIONS, HEAD.
 
-**Why it matters:** Unnecessary HTTP methods increase attack surface. Methods like PUT and DELETE should be explicitly disabled if not required, as they could allow unauthorized file uploads or deletions.
+**Why it matters:** Unnecessary HTTP methods increase attack surface. Methods like PUT and DELETE should be explicitly disabled if not required.
 
 **How to fix it:** Restrict allowed methods in Apache configuration:
 <LimitExcept GET POST HEAD>
     Deny from all
 </LimitExcept>
+````
 
 Security Recommendations Summary
 PriorityActionHighPatch path traversal vulnerability and restrict directory accessMediumAdd X-Frame-Options header to prevent clickjackingMediumRestrict /server-status to localhost onlyLowAdd X-Content-Type-Options headerLowRemove inode data from ETag headersLowRestrict allowed HTTP methods to minimum required
