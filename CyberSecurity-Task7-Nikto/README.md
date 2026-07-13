@@ -1,5 +1,3 @@
-Now let's write the README. Go to your CyberSecurity-Task7-Nikto folder on GitHub, create a new file called README.md and paste this in:
-
 # Task 7: Vulnerability Scanning with Nikto
 
 ## Objective
