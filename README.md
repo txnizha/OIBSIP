@@ -1,8 +1,8 @@
-# OIBSIP — Oasis Infobyte Cybersecurity Internship
+# Cybersecurity Internship Portfolio
 
 ## About This Repository
 
-This repository contains all task submissions for the Oasis Infobyte Cyber Security internship track. Each folder corresponds to a completed task and contains the relevant scripts, scan results, screenshots, and documentation.
+This repository contains practical cybersecurity tasks completed during a Security Analyst Internship. Each folder corresponds to a completed task and contains relevant scripts, scan results, screenshots, and professional documentation.
 
 ---
 
@@ -25,7 +25,7 @@ This repository contains all task submissions for the Oasis Infobyte Cyber Secur
 
 ## Tools Used
 
-Nmap, UFW, Wireshark, Nikto, DVWA, sqlmap, Kali Linux (VMware Fusion)
+Nmap, UFW, Wireshark, Nikto, DVWA, sqlmap, Kali Linux, Apache, MariaDB
 
 ---
 
